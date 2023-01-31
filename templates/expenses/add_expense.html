@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Add Expense</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'expenses' %}">Expenses</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Add Expenses</li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <form action="{% url 'add-expenses' %}" method="POST">
+                {% include 'partials/_messages.html' %}
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="">Amount</label>
+                    <input type="number" class="form-control form-control-sm" name="amount" value="{{values.amount}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" class="form-control form-control-sm" value="{{values.description}}" name="description">
+                </div>
+                <div class="form-group">
+                    <label for="">Category</label>
+                    <select class="form-control form-control-sm" name="category">
+                        {% for category in categories %}
+                        <option selected name="category" value="{{category.name}}">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Date of Expense</label>
+                    <input type="date" selected class="form-control form-control-sm" value="{{values.expense_date}}" name="expense_date">
+                </div>
+                <input type="submit" value="Submit" class="btn btn-primary btn-primary-sm">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
